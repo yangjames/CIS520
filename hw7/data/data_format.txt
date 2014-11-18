@@ -1,0 +1,12 @@
+%% Load the data
+% >> load ../data/ocr_data.mat
+
+% EXPLANATION OF THE DATA:
+%
+%  trainset.letter = the actual letters
+%  trainset.prev_letter = the previous letter (-1 means start)
+%  trainset.pixels = pixel values
+%  trainset.wordidx{i} = row indices of the i'th word in the other fields
+%
+% You can plot the pixels of the i'th character in image form as follows:
+% >> imagesc(reshape(trainset.pixels(i,:), 8, 8)'); axis image; colormap gray;
