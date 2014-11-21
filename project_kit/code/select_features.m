@@ -1,5 +1,4 @@
 function data = select_features(data, threshold)
-
 total_occurrences = sum(data,1);
 weak_features = find(total_occurrences < threshold);
 fprintf('Features selection progress:   0%%');
