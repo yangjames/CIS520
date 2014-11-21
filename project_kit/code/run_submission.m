@@ -14,6 +14,8 @@ X_test = [city_test word_test bigram_test];
 initialize_additional_features;
 
 %% Run algorithm
+model = init_model(X_train, Y_train);
+
 % Example by lazy TAs
 N = size(X_test,1);
 prices = zeros(N,1);

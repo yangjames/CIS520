@@ -10,3 +10,4 @@ function prediction = make_final_prediction(model,X_test)
 %
 % **Note: the function will only take 1 sample each time.
 
+prediction = model.predict(X_test);
