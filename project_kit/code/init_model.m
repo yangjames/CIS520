@@ -11,9 +11,9 @@ price_train_set = price_train;
 full_data = U*S*V';
 
 % select features
-selected_data = select_features(full_data,1000);
-data_train_set = selected_data(1:length(price_train),:);
-data_validation_set = selected_data(length(price_train)+1:end,:);
+selected_data = select_features(full_data,floor(0.0492*size(full_data,1)));
+data_train_set = selected_data(1:length(price_train_set),:);
+data_validation_set = selected_data(length(price_train_set)+1:end,:);
 
 %% linear regression by city
 

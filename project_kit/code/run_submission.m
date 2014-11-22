@@ -7,10 +7,6 @@ load ../data/bigram_train.mat
 load ../data/bigram_test.mat
 load ../data/price_train.mat
 
-X_train =[city_train word_train bigram_train];
-Y_train = price_train;
-X_test = [city_test word_test bigram_test];
-
 initialize_additional_features;
 
 %% Run algorithm
