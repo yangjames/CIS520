@@ -79,7 +79,7 @@ fprintf('Finished predicting in %dm and %3.3fs\n',floor(end_time/60), mod(end_ti
 num_weak_learners = 1;
 data = data_train_set;
 
-w = generate_lr_weak_learners(data,price_train_set,num_weak_learners)
+w = generate_lr_weak_learners(data,price_train_set,num_weak_learners);
 
 current_stamp = toc;
 end_time = (current_stamp-start_time);
@@ -87,7 +87,7 @@ fprintf('Finished training in %dm %3.3fs\n', floor(end_time/60), mod(end_time,60
 fprintf('Predicting...\n')
 end_time = (toc-current_stamp);
 prediction = [data_validation_set ones(size(data_validation_set,1),1)]*mean(w,2);
-
+prediction(find(isnan(prediction))) = 0;
 fprintf('Finished predicting in %dm and %3.3fs\n',floor(end_time/60), mod(end_time,60));
 
 %% calculate error

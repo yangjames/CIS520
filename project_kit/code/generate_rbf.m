@@ -1,6 +1,5 @@
-function rbf = generate_rbf(data, labels)
+function [rbf] = generate_rbf(data, labels)
 rbf = zeros(size(data));
-
 fprintf('RBF generation progress:   0%%');
 for i = 1:size(rbf,2)
     fprintf('\b\b\b\b%3.f%%',i/size(rbf,2)*100);
