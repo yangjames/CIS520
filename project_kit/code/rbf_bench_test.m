@@ -12,33 +12,32 @@ load ../data/bigram_train.mat
 load ../data/price_train.mat
 
 %% split training data up
-train_split = 0.8;
-
+train_split = 0.8; % percentage that will be training
 train_indices = rand(length(price_train),1)<train_split;
-price_train;
 price_train_set = price_train(train_indices,:);
 price_validation_set = price_train(~train_indices,:);
 
 %% pick our data
-rbf_data = generate_rbf([word_train bigram_train],price_train);
-clear word_train
-clear bigram_train
+full_data = generate_rbf([word_train bigram_train],price_train);
+clear word_train bigram_train
 
 %% find prominent features
+%{
 fprintf('Performing SVD...\n')
-[U,S,V]=svds(rbf_data,500);
+[U,S,V]=svds(rbf_data,100);
 clear rbf_data
 
 fprintf('Generating full dataset...\n')
 full_data = U*S*V';
 clear U S V
+%}
 fprintf('Assigning training and validation data...\n')
 data_train_set = full_data(train_indices,:);
 data_validation_set = full_data(~train_indices,:);
 clear full_data
 
 %% linear regression by city
-
+%{
 % assign variables
 fprintf('assigning city train set...\n')
 city_train_set = city_train(train_indices,:);
@@ -74,13 +73,13 @@ end
 prediction = prediction';
 end_time = (toc-current_stamp);
 fprintf('Finished predicting in %dm and %3.3fs\n',floor(end_time/60), mod(end_time,60));
+%}
 
-%{
 %% linear regression
 num_weak_learners = 1;
 data = data_train_set;
 
-w = generate_lr_weak_learners(data,price_train_set,num_weak_learners);
+w = generate_lr_weak_learners(data,price_train_set,num_weak_learners)
 
 current_stamp = toc;
 end_time = (current_stamp-start_time);
@@ -90,7 +89,7 @@ end_time = (toc-current_stamp);
 prediction = [data_validation_set ones(size(data_validation_set,1),1)]*mean(w,2);
 
 fprintf('Finished predicting in %dm and %3.3fs\n',floor(end_time/60), mod(end_time,60));
-%}
+
 %% calculate error
 rms_error = sqrt(sum((price_validation_set - prediction).^2)/length(price_validation_set));
 fprintf('RMS error: %6.6f\n', rms_error);
